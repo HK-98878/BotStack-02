@@ -1,0 +1,10 @@
+PreGraphicsBackup.zip
+test.*
+resources/arial.png
+.vscode/*
+xavier.py
+*.exe
+.clangd
+.clang-format
+log.txt
+bestoneyet.pth
