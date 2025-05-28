@@ -13,7 +13,7 @@ static void lockAspectRatio(int *out_w, int *out_h, int w, int h, int src_w, int
   *out_h = src_h * ratio;
 }
 
-void tigrResizeUpdate(TigrResize *r) {
+void tigrResizeNoUpdate(TigrResize *r) {
   static int w, h;
   if (r->last_w != r->window->w || r->last_h != r->window->h) {
     r->last_w = r->window->w, r->last_h = r->window->h;
@@ -28,6 +28,10 @@ void tigrResizeUpdate(TigrResize *r) {
 
   tigrBlit(r->window, r->contents_display, MAX((r->window->w - r->contents_display->w) / 2, 0),
            MAX((r->window->h - r->contents_display->h) / 2, 0), 0, 0, r->contents_display->w, r->contents_display->h);
+}
+
+void tigrResizeUpdate(TigrResize *r) {
+  tigrResizeNoUpdate(r);
   tigrUpdate(r->window);
 }
 

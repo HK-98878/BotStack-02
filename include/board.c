@@ -60,10 +60,10 @@ BoardData *initBoardData(int primaryPlayer) {
   b->board_render = tigrBitmap(BOARD_RENDER_SIZE, BOARD_RENDER_SIZE);
   tigrClear(b->board_render, SQ_COLOUR);
   for (int i = 0; i < BOARD_SIZE - 1; ++i) {
-    tigrFill(b->board_render, (i + 1) * BOARD_SQUARE_SIZE - (BOARD_MARGIN_SIZE / 2), 0, 2, BOARD_RENDER_SIZE,
-             BG_COLOUR);
-    tigrFill(b->board_render, 0, (i + 1) * BOARD_SQUARE_SIZE - (BOARD_MARGIN_SIZE / 2), BOARD_RENDER_SIZE, 2,
-             BG_COLOUR);
+    tigrFill(b->board_render, (i + 1) * BOARD_SQUARE_SIZE - (BOARD_MARGIN_SIZE / 2), 0, 2,
+             BOARD_RENDER_SIZE, BG_COLOUR);
+    tigrFill(b->board_render, 0, (i + 1) * BOARD_SQUARE_SIZE - (BOARD_MARGIN_SIZE / 2),
+             BOARD_RENDER_SIZE, 2, BG_COLOUR);
   }
 
   b->hit_squares_head = -1;
@@ -85,17 +85,19 @@ void updateSquare(Tigr *board, int primaryPlayer, int x, int y, Square s) {
       // tigrBlitAlpha(board, hit, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE, 0xff);
       break;
     case SQUARE_MISS:
-      switch (backgroundState) {
-        case 0:
-          tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE, (TPixel){0x4e, 0x63, 0x71, 0xff});
-          break;
-        case 1:
-          tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE, (TPixel){0x2e, 0x54, 0x20, 0xff});
-          break;
-        case 2:
-          tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE, (TPixel){0xb1, 0x55, 0x2d, 0xff});
-          break;
-      }
+      tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE,
+                   (TPixel){0x20, 0x20, 0x20, 0xff});
+      // switch (backgroundState) {
+      //   case 0:
+      //     tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE,
+      //     (TPixel){0x4e, 0x63, 0x71, 0xff}); break;
+      //   case 1:
+      //     tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE,
+      //     (TPixel){0x2e, 0x54, 0x20, 0xff}); break;
+      //   case 2:
+      //     tigrBlitTint(board, miss, x, y, 0, 0, BOARD_SQUARE_SIZE, BOARD_SQUARE_SIZE,
+      //     (TPixel){0xb1, 0x55, 0x2d, 0xff}); break;
+      // }
       break;
     default:
       break;
@@ -143,9 +145,10 @@ int placeShip(BoardData *board, ShipID shipId, int x, int y, int rot) {
     board->board[coords[ptr].y + coords[ptr].x * BOARD_SIZE] = SQUARE_SHIP_PATROL_BOAT + shipId;
 #ifndef NO_GRAPHICS
   int sprite_size = BoatSpritesheetSizes[shipId];
-  tigrBlitAlpha(board->board_render, boat_spritesheets[shipId], (x - (sprite_size / 2)) * BOARD_SQUARE_SIZE,
-                (y - (sprite_size / 2)) * BOARD_SQUARE_SIZE, rot * (sprite_size * BOARD_SQUARE_SIZE), 0,
-                sprite_size * BOARD_SQUARE_SIZE, sprite_size * BOARD_SQUARE_SIZE, 0xff);
+  tigrBlitAlpha(
+      board->board_render, boat_spritesheets[shipId], (x - (sprite_size / 2)) * BOARD_SQUARE_SIZE,
+      (y - (sprite_size / 2)) * BOARD_SQUARE_SIZE, rot * (sprite_size * BOARD_SQUARE_SIZE), 0,
+      sprite_size * BOARD_SQUARE_SIZE, sprite_size * BOARD_SQUARE_SIZE, 0xff);
 #endif
   free(coords);
 
@@ -202,7 +205,8 @@ HitType shoot(BoardData *board, int x, int y, int *sunk) {
 }
 
 #ifndef NO_GRAPHICS
-void renderPlacementOverlay(BoardData *board, Tigr *render, int player1, ShipID shipId, int x, int y, int rot) {
+void renderPlacementOverlay(BoardData *board, Tigr *render, int player1, ShipID shipId, int x,
+                            int y, int rot) {
   if (board == NULL)
     return;
 
@@ -240,9 +244,10 @@ void renderPlacementOverlay(BoardData *board, Tigr *render, int player1, ShipID 
   Tigr *frame = tigrBitmap(BOARD_RENDER_SIZE, BOARD_RENDER_SIZE);
   tigrClear(frame, (TPixel){0x00, 0x00, 0x00, 0x00});
   tigrBlitTint(frame, boat_spritesheets[shipId], (x - (sprite_size / 2)) * BOARD_SQUARE_SIZE,
-               (y - (sprite_size / 2)) * BOARD_SQUARE_SIZE, rot * (sprite_size * BOARD_SQUARE_SIZE), 0,
-               sprite_size * BOARD_SQUARE_SIZE, sprite_size * BOARD_SQUARE_SIZE, tint);
-  tigrBlitAlpha(render, frame, x_offset, TEXT_SPACE, 0, 0, BOARD_RENDER_SIZE, BOARD_RENDER_SIZE, 0xff);
+               (y - (sprite_size / 2)) * BOARD_SQUARE_SIZE, rot * (sprite_size * BOARD_SQUARE_SIZE),
+               0, sprite_size * BOARD_SQUARE_SIZE, sprite_size * BOARD_SQUARE_SIZE, tint);
+  tigrBlitAlpha(render, frame, x_offset, TEXT_SPACE + HEADER_SPACE, 0, 0, BOARD_RENDER_SIZE,
+                BOARD_RENDER_SIZE, 0xff);
 }
 #endif
 

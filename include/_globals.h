@@ -1,18 +1,17 @@
 #ifndef GLOBALS
 #define GLOBALS
 
-#ifdef PYTHON_BOT
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
 #define PLAYER_FILE "player1.py"
-#endif
 
 #define BOARD_SIZE 10
 
 #define BOARD_SQUARE_SIZE 100
 #define BOARD_MARGIN_SIZE 2
-// #define BOARD_RENDER_SIZE ((BOARD_SIZE * BOARD_SQUARE_SIZE) + ((BOARD_SIZE - 1) * BOARD_MARGIN_SIZE))
+// #define BOARD_RENDER_SIZE ((BOARD_SIZE * BOARD_SQUARE_SIZE) + ((BOARD_SIZE - 1) *
+// BOARD_MARGIN_SIZE))
 #define BOARD_RENDER_SIZE (BOARD_SIZE * BOARD_SQUARE_SIZE)
 
 #define WATER_SPRITE_SIZE_X 1432
@@ -32,8 +31,9 @@ const extern int BoatSpritesheetSizes[5];
 #define ICON_HEIGHT            200
 const extern int IconWidths[5];
 
-#define TEXT_SPACE 40
-#define ICON_SPACE 250
+#define TEXT_SPACE   40
+#define HEADER_SPACE 100
+#define ICON_SPACE   250
 
 #define SHOT_R 5
 
@@ -71,7 +71,8 @@ static int toCoords(const char* input, int* x, int* y) {
   if (input[0] == '0')
     return 0;
 
-  if (!(input[0] >= 'A' && input[0] <= 'A' + BOARD_SIZE - 1) && !(input[0] >= 'a' && input[0] <= 'a' + BOARD_SIZE - 1))
+  if (!(input[0] >= 'A' && input[0] <= 'A' + BOARD_SIZE - 1) &&
+      !(input[0] >= 'a' && input[0] <= 'a' + BOARD_SIZE - 1))
     return 0;
   *x = (input[0] >= 'a' ? input[0] - 32 : input[0]) - 'A';
 

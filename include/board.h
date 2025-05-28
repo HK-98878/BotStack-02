@@ -44,7 +44,8 @@ int placeShip(BoardData* board, ShipID shipId, int x, int y, int rot);
 HitType shoot(BoardData* board, int x, int y, int* sunk);
 
 #ifndef NO_GRAPHICS
-void renderPlacementOverlay(BoardData* board, Tigr* render, int player1, ShipID shipId, int x, int y, int rot);
+void renderPlacementOverlay(BoardData* board, Tigr* render, int player1, ShipID shipId, int x,
+                            int y, int rot);
 extern Tigr** boat_spritesheets;
 extern Tigr *hit, *miss;
 #endif
@@ -88,10 +89,15 @@ static Board* toBoard(BoardData* src, int obscure) {
 /* --------------------
   Animation data
 -------------------- */
-typedef enum AnimationState { ANIMATION_NONE, ANIMATION_SHOOT, ANIMATION_SPLASH, ANIMATION_HIT } AnimationState;
+typedef enum AnimationState {
+  ANIMATION_NONE,
+  ANIMATION_SHOOT,
+  ANIMATION_SPLASH,
+  ANIMATION_HIT
+} AnimationState;
 
 #define ANIMATION_DURATION_WATER     20
-#define ANIMATION_DURATION_SHOOT_AIM 20
+#define ANIMATION_DURATION_SHOOT_AIM 10
 #define ANIMATION_DURATION_SHOOT     ANIMATION_DURATION_SHOOT_AIM + 10
 
 #define FLAME_SPRITE_SIZE        100

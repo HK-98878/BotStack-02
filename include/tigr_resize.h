@@ -17,5 +17,6 @@ typedef struct TigrResize {
 Tigr *scaleBitmap(Tigr *src, int dx, int dy);
 
 void tigrResizeUpdate(TigrResize *resize);
+void tigrResizeNoUpdate(TigrResize *resize);
 
 #endif
